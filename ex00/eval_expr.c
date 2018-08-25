@@ -6,7 +6,7 @@
 /*   By: dabeloos <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/25 10:58:03 by dabeloos          #+#    #+#             */
-/*   Updated: 2018/08/25 15:32:59 by dabeloos         ###   ########.fr       */
+/*   Updated: 2018/08/25 15:48:52 by dabeloos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,12 @@ char	*ft_cut_parenthesis(char *expr)
 	int	end;
 
 	start = 0;
-	while (expr[start] == ' ')
+	while (expr[start] == ' ' || expr[start] == '\t' || expr[start] == '\n' ||
+			expr[start] == '\r' || expr[start] == '\v' || expr[start] == '\f')
 		start++;
 	end = ft_strlen(expr) - 1;
-	while (expr[end] == ' ')
+	while (expr[end] == ' ' || expr[end] == '\t' || expr[end] == '\n' ||
+			expr[end] == '\r' || expr[end] == '\v' || expr[end] == '\f')
 		end--;
 	if (ft_is_big_parenthesis(expr, start, end) == 1)
 		return (ft_strncpy(expr + start + 1, end - start - 1));
@@ -115,6 +117,11 @@ int		eval_expr(char *str)
 	char *op;
 
 	expr = ft_cut_parenthesis(str);
+	while (ft_strcmp(expr, str) != 0)
+	{
+		str = expr;
+		expr = ft_cut_parenthesis(str);
+	}
 	op = ft_first_lowest_op(expr);
 	if (op == NULL)
 		return (ft_atoi(expr));

@@ -6,7 +6,7 @@
 /*   By: dabeloos <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/25 10:36:01 by dabeloos          #+#    #+#             */
-/*   Updated: 2018/08/25 14:30:25 by dabeloos         ###   ########.fr       */
+/*   Updated: 2018/08/25 15:39:52 by dabeloos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void			ft_putnbr(int nb);
 int				ft_strlen(char *src);
 int				ft_atoi(char *str);
 char			*ft_strncpy(char *str, int n);
+int				ft_strcmp(char *s1, char *s2);
 char			*ft_first_lowest_op(char *expr);
 int				ft_is_big_parenthesis(char *expr, int start, int end);
 char			*ft_cut_parenthesis(char *expr);

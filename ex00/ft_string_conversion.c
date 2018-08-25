@@ -6,7 +6,7 @@
 /*   By: dabeloos <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/25 10:56:16 by dabeloos          #+#    #+#             */
-/*   Updated: 2018/08/25 12:37:00 by dabeloos         ###   ########.fr       */
+/*   Updated: 2018/08/25 15:38:51 by dabeloos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,19 @@ int		ft_strlen(char *src)
 	return (i);
 }
 
-int		ft_atoi(char *str)
+int		ft_strcmp(char *s1, char *s2)
 {
-	int		result;
-	int		sign;
-	int		i;
+	int i;
+	int cmp;
 
-	result = 0;
 	i = 0;
-	sign = 1;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' ||
-			str[i] == '\r' || str[i] == '\v' || str[i] == '\f')
-		i++;
-	if (str[i] == '+')
-		i++;
-	else if (str[i] == '-')
+	cmp = 0;
+	while (s1[i] != '\0' && s2[i] != '\0' && cmp == 0)
 	{
-		i++;
-		sign = -1;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		result = result * 10 + sign * (str[i] - '0');
+		cmp = s1[i] - s2[i];
 		i++;
 	}
-	return (result);
+	return ((cmp == 0) ? s1[i] - s2[i] : cmp);
 }
 
 char	*ft_strncpy(char *src, int n)
