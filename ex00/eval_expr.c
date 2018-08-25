@@ -6,7 +6,7 @@
 /*   By: dabeloos <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/25 10:58:03 by dabeloos          #+#    #+#             */
-/*   Updated: 2018/08/25 13:08:42 by dabeloos         ###   ########.fr       */
+/*   Updated: 2018/08/25 14:31:32 by dabeloos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,31 @@ char	*ft_first_lowest_op(char *expr)
 	return ((expr[i] != '\0') ? expr + i : NULL);
 }
 
+int		ft_is_big_parenthesis(char *expr, int start, int end)
+{
+	int	big_parenthesis;
+	int l;
+
+	big_parenthesis = 0;
+	if (expr[start] == '(')
+	{
+		l = 0;
+		while (expr[++l + start] != '\0')
+		{
+			if (expr[start + l] == '(')
+				big_parenthesis--;
+			else if (expr[start + l] == ')')
+				big_parenthesis++;
+			if (big_parenthesis > 0 && start + l != end)
+			{
+				big_parenthesis = 0;
+				break ;
+			}
+		}
+	}
+	return (big_parenthesis);
+}
+
 char	*ft_cut_parenthesis(char *expr)
 {
 	int	start;
@@ -63,10 +88,10 @@ char	*ft_cut_parenthesis(char *expr)
 	end = l - 1;
 	while (expr[end] == ' ')
 		end--;
-	if (expr[start] != '(' || expr[end] != ')')
-		return (ft_strncpy(expr + start, end + 1 - start));
-	else
+	if (ft_is_big_parenthesis(expr, start, end) == 1)
 		return (ft_strncpy(expr + start + 1, end - start - 1));
+	else
+		return (ft_strncpy(expr + start, end + 1 - start));
 }
 
 int		compute_expr(char *str, char *op)
@@ -90,17 +115,7 @@ int		eval_expr(char *str)
 	expr = ft_cut_parenthesis(str);
 	op = ft_first_lowest_op(expr);
 	if (op == NULL)
-		return (ft_atoi(str));
+		return (ft_atoi(expr));
 	else
 		return (compute_expr(expr, op));
-}
-
-int		main(int argc, char **argv)
-{
-	if (argc > 1)
-	{
-		ft_putnbr(eval_expr(argv[1]));
-		ft_putchar('\n');
-	}
-	return (0);
 }

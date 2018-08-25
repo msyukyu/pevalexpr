@@ -6,7 +6,7 @@
 /*   By: dabeloos <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/25 10:36:01 by dabeloos          #+#    #+#             */
-/*   Updated: 2018/08/25 12:50:10 by dabeloos         ###   ########.fr       */
+/*   Updated: 2018/08/25 14:30:25 by dabeloos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int				ft_strlen(char *src);
 int				ft_atoi(char *str);
 char			*ft_strncpy(char *str, int n);
 char			*ft_first_lowest_op(char *expr);
+int				ft_is_big_parenthesis(char *expr, int start, int end);
 char			*ft_cut_parenthesis(char *expr);
 int				compute_expr(char *str, char *op);
 int				eval_expr(char *str);
