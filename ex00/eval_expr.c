@@ -6,7 +6,7 @@
 /*   By: dabeloos <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/25 10:58:03 by dabeloos          #+#    #+#             */
-/*   Updated: 2018/08/25 14:31:32 by dabeloos         ###   ########.fr       */
+/*   Updated: 2018/08/25 15:32:59 by dabeloos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,28 @@ char	*ft_first_lowest_op(char *expr)
 	int	i;
 	int	count;
 
-	i = -1;
+	i = ft_strlen(expr);
 	count = 0;
-	while (expr[++i] != '\0' && ((expr[i] != '+' && expr[i] != '-') ||
-				count > 0))
+	while (--i > -1 && ((expr[i] != '+' && expr[i] != '-') ||
+				count < 0))
 	{
 		if (expr[i] == '(')
 			count++;
 		else if (expr[i] == ')')
 			count--;
 	}
-	if (expr[i] != '\0')
+	if (i > -1)
 		return (expr + i);
-	i = -1;
-	while (expr[++i] != '\0' && ((expr[i] != '/' && expr[i] != '*' &&
-			expr[i] != '%') || count > 0))
+	i = ft_strlen(expr);
+	while (--i > -1 && ((expr[i] != '/' && expr[i] != '*' &&
+			expr[i] != '%') || count < 0))
 	{
 		if (expr[i] == '(')
 			count++;
 		else if (expr[i] == ')')
 			count--;
 	}
-	return ((expr[i] != '\0') ? expr + i : NULL);
+	return ((i > -1) ? expr + i : NULL);
 }
 
 int		ft_is_big_parenthesis(char *expr, int start, int end)
@@ -64,7 +64,11 @@ int		ft_is_big_parenthesis(char *expr, int start, int end)
 			if (expr[start + l] == '(')
 				big_parenthesis--;
 			else if (expr[start + l] == ')')
+			{
 				big_parenthesis++;
+				if (big_parenthesis > 0 && start + l == end)
+					break ;
+			}
 			if (big_parenthesis > 0 && start + l != end)
 			{
 				big_parenthesis = 0;
@@ -79,13 +83,11 @@ char	*ft_cut_parenthesis(char *expr)
 {
 	int	start;
 	int	end;
-	int	l;
 
 	start = 0;
 	while (expr[start] == ' ')
 		start++;
-	l = ft_strlen(expr);
-	end = l - 1;
+	end = ft_strlen(expr) - 1;
 	while (expr[end] == ' ')
 		end--;
 	if (ft_is_big_parenthesis(expr, start, end) == 1)
